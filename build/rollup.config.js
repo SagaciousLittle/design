@@ -1,14 +1,23 @@
-import json from '@rollup/plugin-json'
-import ts from '@rollup/plugin-typescript'
-import jsx from 'acorn-jsx'
-import { resolve } from 'path'
+import json from '@rollup/plugin-json';
+import ts from '@rollup/plugin-typescript';
+import jsx from 'acorn-jsx';
+import ignoreImports from './ignore-imports';
 
 export default {
-  input: 'src/Button/index.tsx',
+  input: {
+    index: 'components/index.ts',
+  },
   output: {
     format: 'esm',
     sourcemap: true,
-    dir: resolve(__dirname, '../aaa/Button'),
+    dir: 'dist',
+    chunkFileNames: '[name].js',
+    manualChunks (id) {
+      const matchRes = id.match(/components\/(.*)\/index.tsx$/)
+      if (matchRes && matchRes[1]) {
+        return `${matchRes[1]}/index`
+      }
+    },
   },
   external: [
     'react',
@@ -19,9 +28,9 @@ export default {
   ],
   plugins: [
     json(),
+    ignoreImports(),
     ts({
       jsx: 'preserve',
-      outDir: resolve(__dirname, '../aaa/Button'),
     }),
   ],
 }

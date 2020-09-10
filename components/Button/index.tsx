@@ -1,10 +1,8 @@
 import React from 'react'
 
-const Button: React.FC = () => {
+const Button = () => {
   return (
-    <div>
-      button
-    </div>
+    <div>button</div>
   )
 }
 
