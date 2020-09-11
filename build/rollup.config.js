@@ -13,7 +13,7 @@ export default {
     dir: 'dist',
     chunkFileNames: '[name].js',
     manualChunks (id) {
-      const matchRes = id.match(/components\/(.*)\/index.tsx$/)
+      const matchRes = id.match(/components\/(.*)\/index\.(t|j)sx?$/)
       if (matchRes && matchRes[1]) {
         return `${matchRes[1]}/index`
       }
